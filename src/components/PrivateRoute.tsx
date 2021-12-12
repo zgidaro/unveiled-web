@@ -9,5 +9,5 @@ interface PrivateRouteProps {
 
 export const PrivateRoute = ({ children }: PrivateRouteProps) => {
     const token = useSelector(tokenSelector);
-    return !token ? <Navigate to="/login" /> : children;
+    return !token ? <Navigate to="/home" /> : children;
 };
