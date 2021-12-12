@@ -1,51 +1,57 @@
 .home {
-    height: 100vh;
-    padding: 16px;
+    padding: 128px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
-    header {
-        width: 100%;
+    .signup-steps {
+        padding-top: 64px;
         display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
 
-    .home-container {
-        padding-top: 128px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-
-        .signup-steps {
-            padding-top: 64px;
+        .step {
+            width: 300px;
+            height: 300px;
             display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
 
-            .step {
-                width: 300px;
-                height: 300px;
-                padding: 16px;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                text-align: center;
+            margin: 0 16px;
 
-                box-shadow: 0 2px 16px 0 rgba(0,0,0,.05);
-                border-radius: 8px;
+            svg {
+                margin-bottom: 16px;
 
-                margin: 0 8px;
-
-                svg {
-                    margin-bottom: 16px;
-
-                    path {
-                        fill: rgb(50, 49, 48);
-                    }
-                }
-
-                label {
-                    font-size: 18px;
+                path {
+                    fill: rgb(50, 49, 48);
                 }
             }
+
+            label {
+                font-size: 18px;
+            }
+        }
+    }
+
+    .recent-nfts {
+        font-size: +4;
+        padding-top: 96px;
+        padding-bottom: 16px;
+    }
+
+    .opensea-nfts {
+        display: flex;
+        flex-wrap: wrap;
+        max-width: 996px;
+        width: 100%;
+        justify-content: center;
+    }
+
+    @media (max-width: 1000px) {
+        .signup-steps,
+        .opensea-nfts {
+            flex-direction: column;
+            align-items: center;
         }
     }
 }
