@@ -6,7 +6,7 @@ import { tokenSelector } from '../../selectors/authentication.selector';
 export const useToolbar = () => {
     const token = useSelector(tokenSelector);
     const showDashboard = !!token && window.location.pathname === "/home";
-    const showGetStarted = !token && window.location.pathname === "/home" && !showDashboard;
+    const showGetStarted = !token && window.location.pathname === "/home";
     const showLogout = !!token && window.location.pathname === "/";
     const dispatch = useDispatch();
 

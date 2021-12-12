@@ -11,9 +11,11 @@ interface NFTPlaceHolderProps {
     href?: string;
 }
 
+const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+
 export const NFTPlaceholder = ({ name, image, href }: NFTPlaceHolderProps) => {
     return (
-        <Tilt>
+        <Tilt tiltEnable={!isTouchDevice}>
             <div className="nft-placeholder">
                 {href ? <Link className="opensea" href={href} target="_blank"><OpenSea size={32} /></Link> : null}
                 <img src={image} alt={name} />
