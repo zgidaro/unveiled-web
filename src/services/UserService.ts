@@ -14,6 +14,10 @@ export class UserService extends SecuredService {
     public async getUserWallets(username: string): Promise<Wallet[] | undefined> {
         return await this.get(`${this.baseUrl}/wallets/${username}`);
     }
+
+    public async deleteWallet(address: string): Promise<void> {
+        return await this.put(`${this.baseUrl}/wallets/${address}`);
+    }
 }
 
 export type WalletType = 'solana' | 'ethereum' | 'polygon';

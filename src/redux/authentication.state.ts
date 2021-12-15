@@ -1,7 +1,7 @@
 import JwtDecode from 'jwt-decode';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { AuthenticationService } from '../services/AuthenticationService';
-import { Wallet, UserService } from '../services/UserService';
+import { Wallet, UserService, WalletType } from '../services/UserService';
 
 export interface Token {
     user_id: string;
@@ -43,7 +43,11 @@ const setWalletsReducer = (state: AuthenticationState, action: PayloadAction<Wal
 }
 
 const addWalletReducer = (state: AuthenticationState, action: PayloadAction<Wallet>) => {
-    state.wallets.push(action.payload);
+    state.wallets = state.wallets.concat(action.payload);
+}
+
+const deleteWalletReducer = (state: AuthenticationState, action: PayloadAction<string>) => {
+    state.wallets = state.wallets.filter((w) => w.address !== action.payload);
 }
 
 const { reducer, actions } = createSlice({
@@ -54,16 +58,33 @@ const { reducer, actions } = createSlice({
         logout: logoutReducer,
         setWallets: setWalletsReducer,
         addWallet: addWalletReducer,
+        deleteWallet: deleteWalletReducer,
     },
 });
 
 export { reducer as AuthenticationReducer };
-export const { setToken, logout, addWallet } = actions;
+export const { setToken, logout } = actions;
 
 export const loadWallets = () => {
     return (async (dispatch: any) => {
         const service = new UserService();
         const res = await service.getWallets();
         dispatch(actions.setWallets(res ?? []));
+    });
+};
+
+export const addWallet = (address: string, type: WalletType) => {
+    return (async (dispatch: any) => {
+        dispatch(actions.addWallet({ address, type }));
+        const service = new UserService();
+        await service.addWallet(address, type);
+    });
+};
+
+export const deleteWallet = (address: string) => {
+    return (async (dispatch: any) => {
+        const service = new UserService();
+        service.deleteWallet(address);
+        dispatch(actions.deleteWallet(address));
     });
 };

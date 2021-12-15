@@ -10,6 +10,7 @@ import { Provider } from 'react-redux';
 import { PrivateRoute } from './PrivateRoute';
 import { WalletContexts } from './WalletContexts/WalletContexts';
 import { Profile } from './Profile/Profile';
+import { initializeIcons } from '@fluentui/react/lib/Icons';
 import reducers from '../redux/reducers';
 
 import palette from '../theme.json';
@@ -19,7 +20,10 @@ const unveiledTheme = createTheme({ palette });
 
 export const store = configureStore({
     reducer: reducers,
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
 });
+
+initializeIcons();
 
 export const Unveiled = () => {
     return (

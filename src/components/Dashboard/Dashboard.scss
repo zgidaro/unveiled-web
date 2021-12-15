@@ -3,12 +3,36 @@
     flex-direction: column;
     align-items: center;
 
+    .dashboard-wallets {
+        display: flex;
+        flex-direction: column;
+
+        .dashboard-wallet {
+            display: flex;
+            align-items: center;
+            margin: 8px 0;
+
+            img {
+                margin-right: 16px;
+            }
+
+            button {
+                margin-left: 16px;
+                color: red;
+            }
+        }
+    }
+
     .dashboard-nfts {
         display: flex;
         flex-wrap: wrap;
         max-width: 996px;
         width: 100%;
         justify-content: center;
+    }
+
+    .logo-footer {
+        margin: 16px 0;
     }
 
     @media (max-width: 1000px) {

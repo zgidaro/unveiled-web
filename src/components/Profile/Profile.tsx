@@ -1,6 +1,7 @@
-import { Shimmer, ShimmerElementsGroup, ShimmerElementType } from '@fluentui/react';
 import React from 'react';
+import { Shimmer, ShimmerElementsGroup, ShimmerElementType } from '@fluentui/react';
 import { NFTPlaceholder } from '../Home/NFTPlaceholder/NFTPlaceholder';
+import { UnveiledLogo } from '../Icons/UnveiledLogo';
 import { useProfile } from './Profile.hooks';
 
 export const Profile = () => {
@@ -12,13 +13,15 @@ export const Profile = () => {
             <div className="dashboard-nfts">
                 {loading
                     ? <Shimmer
-                        width={350}
                         customElementsGroup={
                             <div style={{ display: 'flex' }}>
                                 <ShimmerElementsGroup
-                                    width={'350px'}
                                     shimmerElements={[
-                                        { type: ShimmerElementType.line, width: 350, height: 350 },
+                                        { type: ShimmerElementType.line, width: 300, height: 300 },
+                                        { type: ShimmerElementType.gap, width: 16, height: 300 },
+                                        { type: ShimmerElementType.line, width: 300, height: 300 },
+                                        { type: ShimmerElementType.gap, width: 16, height: 300 },
+                                        { type: ShimmerElementType.line, width: 300, height: 300 },
                                     ]}
                                 />
                             </div>
@@ -27,6 +30,9 @@ export const Profile = () => {
                     : nfts.map((nft, i) => <NFTPlaceholder key={`${nft.name}_${i}`} name={nft.name} image={nft.image} />)
                 }
             </div>
+            <a href="/home" className="logo-footer">
+                <UnveiledLogo size={16} fill="#8e8e8e" />
+            </a>
         </div>
     );
 };

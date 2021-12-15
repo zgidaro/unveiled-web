@@ -1,0 +1,11 @@
+.select-wallet-dialog-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+    button {
+        margin: 8px 0;
+        width: 100%;
+    }
+}

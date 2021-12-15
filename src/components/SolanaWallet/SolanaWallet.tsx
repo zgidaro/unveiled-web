@@ -1,5 +1,5 @@
 import { ConnectionProvider, WalletProvider } from '@solana/wallet-adapter-react';
-import { WalletModalProvider, WalletMultiButton } from '@solana/wallet-adapter-react-ui';
+import { WalletModalProvider } from '@solana/wallet-adapter-react-ui';
 import React from 'react';
 import { SolanaWalletContext } from './SolanaWallet.types';
 import { useSolanaWallet } from './SolanaWallet.hooks';
@@ -14,9 +14,6 @@ export const SolanaWallet: React.FC = ({ children }) => {
             <ConnectionProvider endpoint={endpoint}>
                 <WalletProvider wallets={wallets} autoConnect={true}>
                     <WalletModalProvider>
-                        <div style={{ display: 'flex', justifyContent: 'flex-end', margin: '16px 0' }}>
-                            <WalletMultiButton />
-                        </div>
                         {children}
                     </WalletModalProvider>
                 </WalletProvider>

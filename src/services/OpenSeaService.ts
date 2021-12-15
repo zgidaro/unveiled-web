@@ -7,6 +7,10 @@ export class OpenSeaService extends BaseService {
     public async retrieveAssets(limit = 20, offset = 0, order_direction = "desc"): Promise<AssetsResult | undefined> {
         return await this.get(`${this.baseUrl}/assets?order_direction=${order_direction}&offset=${offset}&limit=${limit}`);
     }
+
+    public async retrieveOwnerAssets(address: string, limit = 20, offset = 0): Promise<AssetsResult | undefined> {
+        return await this.get(`${this.baseUrl}/assets?owner=${address}&limit=${limit}&offset=${offset}`);
+    }
 }
 
 interface AssetsResult {
