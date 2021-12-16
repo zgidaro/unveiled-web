@@ -1,0 +1,52 @@
+.page-not-found {
+    height: 100%;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    text-align: center;
+    overflow: hidden;
+
+    .not-found-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 10%;
+        position: relative;
+        min-height: 100vh;
+        max-width: 700px;
+
+        svg {
+            margin-bottom: 32px;
+        }
+
+        .return-home {
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-size: 18px;
+            color: rgba(#101010, 0.8);
+            font-weight: bold;
+            margin-top: 4px;
+            margin-bottom: 16px;
+            text-decoration: underline;
+        }
+    }
+
+    .footer-logo {
+        position: absolute;
+        max-width: 700px;
+        width: 100%;
+        height: 60px;
+        bottom: 0;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &>* {
+            text-decoration: none;
+        }
+    }
+}

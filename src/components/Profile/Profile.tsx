@@ -30,6 +30,7 @@ export const Profile = () => {
                     : nfts.map((nft, i) => <NFTPlaceholder key={`${nft.name}_${i}`} name={nft.name} image={nft.image} />)
                 }
             </div>
+            {nfts.length || loading ? null : <h3>This user does not have any NFTs yet.</h3>}
             <a href="/home" className="logo-footer">
                 <UnveiledLogo size={16} fill="#8e8e8e" />
             </a>

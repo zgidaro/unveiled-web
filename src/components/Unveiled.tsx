@@ -10,6 +10,7 @@ import { Provider } from 'react-redux';
 import { PrivateRoute } from './PrivateRoute';
 import { WalletContexts } from './WalletContexts/WalletContexts';
 import { Profile } from './Profile/Profile';
+import { PageNotFound } from './PageNotFound/PageNotFound';
 import { initializeIcons } from '@fluentui/react/lib/Icons';
 import reducers from '../redux/reducers';
 
@@ -29,14 +30,21 @@ export const Unveiled = () => {
     return (
         <Provider store={store}>
             <ThemeProvider theme={unveiledTheme} className="unveiled">
-                <Toolbar />
                 <Router>
                     <Routes>
-                        <Route path="/login" element={<Login />} />
-                        <Route path="/signup" element={<Signup />} />
-                        <Route path="/home" element={<Home />} />
-                        <Route path="/" element={<PrivateRoute><WalletContexts /></PrivateRoute>} />
-                        <Route path="/:username" element={<Profile />} />
+                        <Route path="*" element={
+                            <>
+                                <Toolbar />
+                                <Routes>
+                                    <Route path="/login" element={<Login />} />
+                                    <Route path="/signup" element={<Signup />} />
+                                    <Route path="/home" element={<Home />} />
+                                    <Route path="/" element={<PrivateRoute><WalletContexts /></PrivateRoute>} />
+                                    <Route path="/:username" element={<Profile />} />
+                                    <Route path="*" element={<PageNotFound />} />
+                                </Routes>
+                            </>
+                        } />
                     </Routes>
                 </Router>
             </ThemeProvider>

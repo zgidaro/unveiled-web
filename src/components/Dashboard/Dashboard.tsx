@@ -1,5 +1,5 @@
 import React from 'react';
-import { Label, PrimaryButton, Shimmer, ShimmerElementsGroup, ShimmerElementType } from '@fluentui/react';
+import { Label, Shimmer, ShimmerElementsGroup, ShimmerElementType } from '@fluentui/react';
 import { IconButton } from '@fluentui/react/lib/Button';
 import { NFTPlaceholder } from '../Home/NFTPlaceholder/NFTPlaceholder';
 import { useDashboard } from './Dashboard.hooks';
@@ -16,8 +16,7 @@ export const Dashboard = () => {
     return (
         <>
             <div className="dashboard">
-                <h1 style={{ marginBottom: '16px' }}>Your wallets</h1>
-                <PrimaryButton onClick={toggleWalletDialog} text="Add Wallet" />
+                <h1 style={{ marginBottom: '16px' }}>Your wallets <IconButton onClick={toggleWalletDialog} iconProps={{ iconName: "Add" }}/></h1>
                 <div className="dashboard-wallets">
                     {
                         wallets.map((w) => {
