@@ -1,15 +1,20 @@
 import { useWallet } from "@solana/wallet-adapter-react";
-import { useCallback, useEffect, useState } from "react";
-import { getParsedNftAccountsByOwner } from "@nfteyez/sol-rayz";
-import { NFT, NFTMetadata } from './types';
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { NFT, NFTMetadata, SplAccount } from './types';
 import { BaseService } from '../../services/BaseService';
 import { useDispatch, useSelector } from 'react-redux';
 import { addWallet, loadWallets, deleteWallet } from '../../redux/authentication.state';
 import { walletsSelector } from '../../selectors/authentication.selector';
-import { PublicKey } from "@solana/web3.js";
+import { clusterApiUrl, Connection, PublicKey } from "@solana/web3.js";
 import { OpenSeaService } from '../../services/OpenSeaService';
+import { TOKEN_PROGRAM_ID } from "@solana/spl-token";
+import { SolScanService } from '../../services/SolScanService';
+import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
 
 const openSeaService = new OpenSeaService();
+const solScanService = new SolScanService();
+const baseService = new BaseService();
+
 const limit = 50;
 export const useDashboard = () => {
     const wallets = useSelector(walletsSelector);
@@ -60,43 +65,27 @@ export const useDashboard = () => {
     };
 };
 
-const baseService = new BaseService();
-
 export const useSolanaNFTWallet = () => {
     const { publicKey, disconnect } = useWallet();
 
     const dispatch = useDispatch();
 
-    const parseTokenAccountsByOwner = useCallback(async (address: string): Promise<NFT[]> => {
-        const publicKey = new PublicKey(address);
-        if (!publicKey) return [];
-
-        const nfts = await getParsedNftAccountsByOwner({ publicAddress: publicKey });
-        return nfts;
+    const connection = useMemo(() => {
+        return new Connection(clusterApiUrl(WalletAdapterNetwork.Mainnet), "confirmed");
     }, []);
 
     const getNftTokenData = useCallback(async (address: string): Promise<NFTMetadata[]> => {
         try {
-            const nftData = await parseTokenAccountsByOwner(address) as any;
-
-            var data = Object.keys(nftData).map((key) => nftData[key]);
-            let arr: NFTMetadata[] = [];
-            let n = data.length;
-            for (let i = 0; i < n; i++) {
-                let val = await baseService.getWithoutHeaders<NFTMetadata>(data[i].data.uri);
-                if (val) {
-                    arr.push(val);
-                }
-            }
-            return arr;
-        } catch (error) {
+            return await parseTokenAccountsByOwner(connection, address);
+        }
+        catch (error) {
             return [];
         }
-    }, [parseTokenAccountsByOwner]);
-    
+    }, [connection]);
+
     useEffect(() => {
         if (!publicKey) return;
-        
+
         addWallet(publicKey.toString(), "solana")(dispatch);
         disconnect();
     }, [publicKey, disconnect, dispatch]);
@@ -104,4 +93,29 @@ export const useSolanaNFTWallet = () => {
     return {
         getNftTokenData
     };
+};
+
+const parseTokenAccountsByOwner = async (connection: Connection, address: string): Promise<NFTMetadata[]> => {
+    const publicKey = new PublicKey(address);
+    if (!publicKey) return [];
+
+    const { value: splAccounts } = await connection.getParsedTokenAccountsByOwner(publicKey, { programId: TOKEN_PROGRAM_ID });
+    const splNfts = await getNftSplAccountsByAddress(splAccounts);
+
+    const nfts = splNfts.map((nft) => nft.data.metadata as NFT);
+    const parsedNfts = await Promise.all(nfts.map((nft) => baseService.getWithoutHeaders<NFTMetadata>(nft.data.uri)));
+    return parsedNfts.filter((v) => !!v) as NFTMetadata[];
+};
+
+const getNftSplAccountsByAddress = async (accounts: SplAccount[]) => {
+    const nftAccounts = accounts.filter(nftFilter);
+    const nftAddresses = nftAccounts.map((nft) => nft.account.data.parsed?.info?.mint as string);
+    return await Promise.all(nftAddresses.map((nft) => solScanService.getAccountByAddress(nft)));
+};
+
+const nftFilter = ({ account }: SplAccount) => {
+    const tokenAmount = account.data.parsed?.info?.tokenAmount;
+    const amount = tokenAmount.uiAmount;
+    const decimals = tokenAmount.decimals;
+    return decimals === 0 && amount >= 1;
 };

@@ -1,4 +1,4 @@
-import { MetadataKey } from '@nfteyez/sol-rayz/dist/config/metaplex';
+import { AccountInfo, ParsedAccountData, PublicKey } from "@solana/web3.js";
 
 export interface NFT {
     mint: string;
@@ -10,7 +10,6 @@ export interface NFT {
         uri: string;
         sellerFeeBasisPoints: number;
     };
-    key: MetadataKey;
     primarySaleHappened: boolean;
     isMutable: boolean;
     editionNonce: number;
@@ -22,4 +21,9 @@ export interface NFTMetadata {
     name: string;
     image: string;
     description: string;
+}
+
+export type SplAccount = {
+    pubkey: PublicKey;
+    account: AccountInfo<ParsedAccountData>;
 }

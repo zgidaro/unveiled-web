@@ -5,7 +5,7 @@ import { useToolbar } from './hooks';
 
 import './Toolbar.scss';
 
-export const Toolbar = () => {
+const Toolbar = () => {
     const { showToolbar, showDashboard, showGetStarted, showLogout, onLogout } = useToolbar();
 
     return !showToolbar ? null : (
@@ -17,3 +17,12 @@ export const Toolbar = () => {
         </header>
     );
 };
+
+export const withToolbar = (Component: React.ComponentType) => {
+    return (
+        <>
+            <Toolbar />
+            <Component />
+        </>
+    );
+}

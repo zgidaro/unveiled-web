@@ -16,8 +16,8 @@ export const SelectWalletDialog = (props: SelectWalletDialogProps) => {
             modalProps={modelProps}
         >
             <div className="select-wallet-dialog-content">
-                <PrimaryButton onClick={handleEthereum} text="Ethereum " />
                 <PrimaryButton onClick={handleSolana} text="Solana" />
+                <PrimaryButton onClick={handleEthereum} text="Ethereum" disabled={true} />
             </div>
             <DialogFooter>
                 <DefaultButton onClick={onClose} text="Cancel" />

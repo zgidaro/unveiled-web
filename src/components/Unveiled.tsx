@@ -3,7 +3,6 @@ import { createTheme, ThemeProvider } from '@fluentui/react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Home } from './Home/Home';
 import { Signup } from './Authentication/Signup';
-import { Toolbar } from './Toolbar/Toolbar';
 import { Login } from './Authentication/Login';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
@@ -13,6 +12,7 @@ import { Profile } from './Profile/Profile';
 import { PageNotFound } from './PageNotFound/PageNotFound';
 import { initializeIcons } from '@fluentui/react/lib/Icons';
 import reducers from '../redux/reducers';
+import { withToolbar } from './Toolbar/Toolbar';
 
 import palette from '../theme.json';
 import './Unveiled.scss';
@@ -32,19 +32,12 @@ export const Unveiled = () => {
             <ThemeProvider theme={unveiledTheme} className="unveiled">
                 <Router>
                     <Routes>
-                        <Route path="*" element={
-                            <>
-                                <Toolbar />
-                                <Routes>
-                                    <Route path="/login" element={<Login />} />
-                                    <Route path="/signup" element={<Signup />} />
-                                    <Route path="/home" element={<Home />} />
-                                    <Route path="/" element={<PrivateRoute><WalletContexts /></PrivateRoute>} />
-                                    <Route path="/:username" element={<Profile />} />
-                                    <Route path="*" element={<PageNotFound />} />
-                                </Routes>
-                            </>
-                        } />
+                        <Route path="/login" element={withToolbar(Login)} />
+                        <Route path="/signup" element={withToolbar(Signup)} />
+                        <Route path="/home" element={withToolbar(Home)} />
+                        <Route path="/" element={<PrivateRoute>{withToolbar(WalletContexts)}</PrivateRoute>} />
+                        <Route path="/:username" element={withToolbar(Profile)} />
+                        <Route path="*" element={withToolbar(PageNotFound)} />
                     </Routes>
                 </Router>
             </ThemeProvider>
