@@ -2,7 +2,7 @@ import React from 'react';
 import { Shimmer, ShimmerElementsGroup, ShimmerElementType } from '@fluentui/react';
 import { NFTPlaceholder } from '../Home/NFTPlaceholder/NFTPlaceholder';
 import { UnveiledLogo } from '../Icons/UnveiledLogo';
-import { useProfile } from './Profile.hooks';
+import { useProfile } from './hooks';
 
 export const Profile = () => {
     const { pageTitle, nfts, loading } = useProfile();

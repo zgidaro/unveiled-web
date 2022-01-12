@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router';
-import { useSolanaNFTWallet } from '../Dashboard/Dashboard.hooks';
+import { useSolanaNFTWallet } from '../Dashboard/hooks';
 import { UserService } from '../../services/UserService';
-import { NFTMetadata } from '../Dashboard/Dashboard.types';
+import { NFTMetadata } from '../Dashboard/types';
 
 export const useProfile = () => {
     const [nfts, setNfts] = useState<NFTMetadata[]>([]);

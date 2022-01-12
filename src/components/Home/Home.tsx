@@ -3,7 +3,7 @@ import { Label } from '@fluentui/react';
 import { Share } from '../Icons/Share';
 import { UserSignup } from '../Icons/UserSignup';
 import { Wallet } from '../Icons/Wallet';
-import { useHome } from './Home.hooks';
+import { useHome } from './hooks';
 import { NFTPlaceholder } from './NFTPlaceholder/NFTPlaceholder';
 
 import './Home.scss';

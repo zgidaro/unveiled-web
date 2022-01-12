@@ -1,7 +1,7 @@
 import React from 'react';
 import { DefaultButton, Dialog, DialogFooter, PrimaryButton } from '@fluentui/react';
-import { dialogContentProps, modelProps, SelectWalletDialogProps } from './SelectWalletDialog.types';
-import { useSelectWalletDialog } from './SelectWalletDialog.hooks';
+import { dialogContentProps, modelProps, SelectWalletDialogProps } from './types';
+import { useSelectWalletDialog } from './hooks';
 
 import './SelectWalletDialog.scss';
 

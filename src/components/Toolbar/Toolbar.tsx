@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, PrimaryButton } from '@fluentui/react';
 import { UnveiledLogo } from '../Icons/UnveiledLogo';
-import { useToolbar } from './Toolbar.hooks';
+import { useToolbar } from './hooks';
 
 import './Toolbar.scss';
 

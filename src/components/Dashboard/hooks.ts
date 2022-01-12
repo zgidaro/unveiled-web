@@ -1,7 +1,7 @@
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useCallback, useEffect, useState } from "react";
 import { getParsedNftAccountsByOwner } from "@nfteyez/sol-rayz";
-import { NFT, NFTMetadata } from './Dashboard.types';
+import { NFT, NFTMetadata } from './types';
 import { BaseService } from '../../services/BaseService';
 import { useDispatch, useSelector } from 'react-redux';
 import { addWallet, loadWallets, deleteWallet } from '../../redux/authentication.state';

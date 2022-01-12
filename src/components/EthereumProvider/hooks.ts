@@ -2,7 +2,7 @@ import { useWeb3React } from "@web3-react/core";
 import { useCallback, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { addWallet } from "../../redux/authentication.state";
-import { injectedConnector } from './EthereumWallet.types';
+import { injectedConnector } from './types';
 
 export const useEthereumWallet = () => {
     const { active, account, activate, deactivate } = useWeb3React();

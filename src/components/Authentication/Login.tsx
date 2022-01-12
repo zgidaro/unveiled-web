@@ -1,7 +1,7 @@
 import { Label, Link, PrimaryButton, TextField } from '@fluentui/react';
 import React from 'react';
 import { Navigate } from 'react-router-dom';
-import { useLogin } from './Authentication.hooks';
+import { useLogin } from './hooks';
 
 import './Authentication.scss';
 

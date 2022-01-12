@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
-import { SelectWalletDialogProps } from './SelectWalletDialog.types';
-import { useEthereumWallet } from '../EthereumWallet/EthereumWallet.hooks';
+import { SelectWalletDialogProps } from './types';
+import { useEthereumWallet } from '../EthereumProvider/hooks';
 import { useWalletModal } from '@solana/wallet-adapter-react-ui';
 
 export const useSelectWalletDialog = ({ open, onClose }: SelectWalletDialogProps) => {

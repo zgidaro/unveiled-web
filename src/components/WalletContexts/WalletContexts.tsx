@@ -1,14 +1,14 @@
 import React from 'react';
 import { Dashboard } from '../Dashboard/Dashboard';
-import { EthereumWallet } from '../EthereumWallet/EthereumWallet';
-import { SolanaWallet } from '../SolanaWallet/SolanaWallet';
+import { EthereumProvider } from '../EthereumProvider/EthereumProvider';
+import { SolanaProvider } from '../SolanaProvider/SolanaProvider';
 
 export const WalletContexts = () => {
     return (
-        <EthereumWallet>
-            <SolanaWallet>
+        <EthereumProvider>
+            <SolanaProvider>
                 <Dashboard />
-            </SolanaWallet>
-        </EthereumWallet>
+            </SolanaProvider>
+        </EthereumProvider>
     );
 };
