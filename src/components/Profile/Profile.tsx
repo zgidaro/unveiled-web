@@ -27,7 +27,7 @@ export const Profile = () => {
                             </div>
                         }
                     />
-                    : nfts.map((nft, i) => <NFTPlaceholder key={`${nft.name}_${i}`} name={nft.name} image={nft.image} />)
+                    : nfts.map((nft, i) => <NFTPlaceholder key={`${nft.mint}}`} nft={nft} />)
                 }
             </div>
             {nfts.length || loading ? null : <h3>This user does not have any NFTs yet.</h3>}

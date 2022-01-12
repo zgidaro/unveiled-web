@@ -1,25 +1,20 @@
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { NFT, NFTMetadata, SplAccount } from './types';
-import { BaseService } from '../../services/BaseService';
+import { NFT, SplAccount } from './types';
 import { useDispatch, useSelector } from 'react-redux';
 import { addWallet, loadWallets, deleteWallet } from '../../redux/authentication.state';
 import { walletsSelector } from '../../selectors/authentication.selector';
 import { clusterApiUrl, Connection, PublicKey } from "@solana/web3.js";
-import { OpenSeaService } from '../../services/OpenSeaService';
 import { TOKEN_PROGRAM_ID } from "@solana/spl-token";
 import { SolScanService } from '../../services/SolScanService';
 import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
 
-const openSeaService = new OpenSeaService();
 const solScanService = new SolScanService();
-const baseService = new BaseService();
 
-const limit = 50;
 export const useDashboard = () => {
     const wallets = useSelector(walletsSelector);
     const dispatch = useDispatch();
-    const [nfts, setNfts] = useState<NFTMetadata[]>([]);
+    const [nfts, setNfts] = useState<NFT[]>([]);
     const [loading, setLoading] = useState(false);
     const [walletDialog, showWalletDialog] = useState(false);
 
@@ -38,18 +33,9 @@ export const useDashboard = () => {
     const { getNftTokenData } = useSolanaNFTWallet();
 
     const loadWalletNfts = useCallback(async () => {
-        const result: NFTMetadata[] = [];
+        const result: NFT[] = [];
         for (let wallet of wallets.filter((w) => w.type === "solana")) {
             result.push(...(await getNftTokenData(wallet.address)));
-        }
-
-        for (let wallet of wallets.filter((w) => w.type === "ethereum")) {
-            let offset = 0;
-            do {
-                const res = (await openSeaService.retrieveOwnerAssets(wallet.address, limit, offset))?.assets ?? [];
-                result.push(...res.filter((a) => a.image_url).map((a) => ({ name: a.name, image: a.image_url, description: a.name })));
-                offset += limit;
-            } while (offset < 100);
         }
         setNfts(result);
         setLoading(false);
@@ -74,7 +60,7 @@ export const useSolanaNFTWallet = () => {
         return new Connection(clusterApiUrl(WalletAdapterNetwork.Mainnet), "confirmed");
     }, []);
 
-    const getNftTokenData = useCallback(async (address: string): Promise<NFTMetadata[]> => {
+    const getNftTokenData = useCallback(async (address: string): Promise<NFT[]> => {
         try {
             return await parseTokenAccountsByOwner(connection, address);
         }
@@ -95,7 +81,7 @@ export const useSolanaNFTWallet = () => {
     };
 };
 
-const parseTokenAccountsByOwner = async (connection: Connection, address: string): Promise<NFTMetadata[]> => {
+const parseTokenAccountsByOwner = async (connection: Connection, address: string): Promise<NFT[]> => {
     const publicKey = new PublicKey(address);
     if (!publicKey) return [];
 
@@ -103,8 +89,7 @@ const parseTokenAccountsByOwner = async (connection: Connection, address: string
     const splNfts = await getNftSplAccountsByAddress(splAccounts);
 
     const nfts = splNfts.map((nft) => nft.data.metadata as NFT);
-    const parsedNfts = await Promise.all(nfts.map((nft) => baseService.getWithoutHeaders<NFTMetadata>(nft.data.uri)));
-    return parsedNfts.filter((v) => !!v) as NFTMetadata[];
+    return nfts;
 };
 
 const getNftSplAccountsByAddress = async (accounts: SplAccount[]) => {

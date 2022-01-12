@@ -1,5 +1,7 @@
 import { AccountInfo, ParsedAccountData, PublicKey } from "@solana/web3.js";
 
+export type NFTType = NFT | NFTMetadata;
+
 export interface NFT {
     mint: string;
     updateAuthority: string;

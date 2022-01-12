@@ -47,7 +47,7 @@ export const Dashboard = () => {
                                 </div>
                             }
                         />
-                        : nfts.map((nft, i) => <NFTPlaceholder key={`${nft.name}_${i}`} name={nft.name} image={nft.image} />)
+                        : nfts.map((nft) => <NFTPlaceholder key={`${nft.mint}`} nft={nft} />)
                     }
                 </div>
             </div>

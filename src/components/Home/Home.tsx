@@ -30,7 +30,7 @@ export const Home = () => {
       </div>
       <h1 className="recent-nfts">Recent OpenSea NFTs</h1>
       <div className="opensea-nfts">
-        {assets.map((a) => <NFTPlaceholder key={a.id} name={a.name} image={a.image_url} href={a.permalink} />)}
+        {assets.map((a) => <NFTPlaceholder key={a.id} nft={{ name: a.name, image: a.image_url, description: a.name }} href={a.permalink} />)}
       </div>
     </div>
   );
